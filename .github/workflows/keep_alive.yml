@@ -1,0 +1,15 @@
+name: Manter Painel CI Ativo
+
+on:
+  schedule:
+    # Executa a cada 11 horas
+    - cron: '0 */11 * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Painel CI Streamlit
+        run: |
+          curl -sS https://cipainel.streamlit.app/ > /dev/null
