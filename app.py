@@ -2596,12 +2596,12 @@ elif menu_opcao == "📊 Plataforma PNP":
             cols_percent = ['Técnico', 'Formação de Professores', 'Proeja']
             for col in cols_percent:
                 if col in df_rap.columns and str(df_rap[col].dtype) in ['object', 'string']:
-                    df_rap[col] = df_rap[col].astype(str).str.replace('%', '', regex=False).str.replace(',', '.', regex=False).astype(float)
+                    df_rap[col] = pd.to_numeric(df_rap[col].astype(str).str.replace('%', '', regex=False).str.replace('.', '', regex=False).str.replace(',', '.', regex=False), errors='coerce')
                     
-            cols_float = ['RAP Presencial', 'Matrículas Equivalentes RAP Presencial', 'RAP', 'Matrículas Equivalentes RAP']
+            cols_float = ['RAP Presencial', 'Matrículas Equivalentes RAP Presencial', 'RAP', 'Matrículas Equivalentes RAP', 'Professor Equivalente']
             for col in cols_float:
                 if col in df_rap.columns and str(df_rap[col].dtype) in ['object', 'string']:
-                    df_rap[col] = df_rap[col].astype(str).str.replace('.', '', regex=False).str.replace(',', '.', regex=False).astype(float)
+                    df_rap[col] = pd.to_numeric(df_rap[col].astype(str).str.replace('.', '', regex=False).str.replace(',', '.', regex=False), errors='coerce')
                     
             st.markdown("<p style='color: #006633; font-weight: bold; font-size: 1.1rem; margin-bottom: 0px;'>⚙️ FILTRO</p>", unsafe_allow_html=True)
             
@@ -3365,7 +3365,7 @@ elif menu_opcao == "🏛️ Conif":
             for col in cols_num:
                 if col in df_conif.columns:
                     if str(df_conif[col].dtype) in ['object', 'string']:
-                        df_conif[col] = df_conif[col].astype(str).str.replace(',', '.', regex=False).astype(float)
+                        df_conif[col] = pd.to_numeric(df_conif[col].astype(str).str.replace('.', '', regex=False).str.replace(',', '.', regex=False), errors='coerce')
                     
             st.markdown("<p style='color: #006633; font-weight: bold; font-size: 1.1rem; margin-bottom: 0px;'>⚙️ FILTROS DE PESQUISA</p>", unsafe_allow_html=True)
             
@@ -3577,7 +3577,7 @@ elif menu_opcao == "🏛️ Conif":
 
             if 'MAE' in df_ae.columns:
                 if str(df_ae['MAE'].dtype) in ['object', 'string']:
-                    df_ae['MAE'] = df_ae['MAE'].astype(str).str.replace(',', '.', regex=False).astype(float)
+                    df_ae['MAE'] = pd.to_numeric(df_ae['MAE'].astype(str).str.replace('.', '', regex=False).str.replace(',', '.', regex=False), errors='coerce')
                 df_ae['MAE'] = df_ae['MAE'].fillna(0)
 
             st.markdown("<p style='color: #006633; font-weight: bold; font-size: 1.1rem; margin-bottom: 0px;'>⚙️ FILTROS DE PESQUISA</p>", unsafe_allow_html=True)
