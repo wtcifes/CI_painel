@@ -2595,13 +2595,13 @@ elif menu_opcao == "📊 Plataforma PNP":
             
             cols_percent = ['Técnico', 'Formação de Professores', 'Proeja']
             for col in cols_percent:
-                if col in df_rap.columns and df_rap[col].dtype == object:
-                    df_rap[col] = df_rap[col].str.replace('%', '', regex=False).str.replace(',', '.', regex=False).astype(float)
+                if col in df_rap.columns and str(df_rap[col].dtype) in ['object', 'string']:
+                    df_rap[col] = df_rap[col].astype(str).str.replace('%', '', regex=False).str.replace(',', '.', regex=False).astype(float)
                     
             cols_float = ['RAP Presencial', 'Matrículas Equivalentes RAP Presencial', 'RAP', 'Matrículas Equivalentes RAP']
             for col in cols_float:
-                if col in df_rap.columns and df_rap[col].dtype == object:
-                    df_rap[col] = df_rap[col].str.replace('.', '', regex=False).str.replace(',', '.', regex=False).astype(float)
+                if col in df_rap.columns and str(df_rap[col].dtype) in ['object', 'string']:
+                    df_rap[col] = df_rap[col].astype(str).str.replace('.', '', regex=False).str.replace(',', '.', regex=False).astype(float)
                     
             st.markdown("<p style='color: #006633; font-weight: bold; font-size: 1.1rem; margin-bottom: 0px;'>⚙️ FILTRO</p>", unsafe_allow_html=True)
             
@@ -3090,8 +3090,8 @@ elif menu_opcao == "📝 Enem":
             
         cols_medias = ['Média LC', 'Média CH', 'Média CN', 'Média MT', 'Média Redação', 'Média Objetivas', 'Média Geral']
         for col in cols_medias:
-            if col in df_enem.columns and df_enem[col].dtype == object:
-                df_enem[col] = df_enem[col].str.replace('.', '', regex=False).str.replace(',', '.', regex=False).astype(float)
+            if col in df_enem.columns and str(df_enem[col].dtype) in ['object', 'string']:
+                df_enem[col] = df_enem[col].astype(str).str.replace('.', '', regex=False).str.replace(',', '.', regex=False).astype(float)
                     
         def criar_grafico_linhas_valores(df, cols, altura=350, cor_linha=None):
             df_melt = df.melt(id_vars=['Ano'], value_vars=cols, var_name='Indicador', value_name='Média')
@@ -3227,8 +3227,8 @@ elif menu_opcao == "🧪 Enade":
             
         cols_numericas = ['Alunos Inscritos', 'Alunos Participantes', 'ENADE', 'CPC', 'IDD']
         for col in cols_numericas:
-            if df_enade[col].dtype == object:
-                df_enade[col] = df_enade[col].str.replace(',', '.', regex=False).astype(float)
+            if str(df_enade[col].dtype) in ['object', 'string']:
+                df_enade[col] = df_enade[col].astype(str).str.replace(',', '.', regex=False).astype(float)
                 
         st.markdown("<p style='color: #006633; font-weight: bold; font-size: 1.1rem; margin-bottom: 0px;'>⚙️ FILTROS DE PESQUISA</p>", unsafe_allow_html=True)
         
@@ -3342,8 +3342,8 @@ elif menu_opcao == "🧪 Enade":
 # ==========================================
 elif menu_opcao == "🏛️ Conif":
     st.markdown("### 🏛️ Indicadores CONIF")
-    st.info("ℹ️ **Estimativa de orçamento com base na Portaria MEC nº 243, de 10 de março de 2026.**")
-    
+    st.info("ℹ️ **Dados da PNP 2023 para estimar o orçamento de 2025.** O orçamento utiliza a PNP de dois anos antes e é calculado a partir da Portaria 243/2026.")
+
     tab1, tab2 = st.tabs([
         "💰 Matriz Orçamentária", 
         "🤝 Assistência Estudantil"
@@ -3364,8 +3364,8 @@ elif menu_opcao == "🏛️ Conif":
             cols_num = ['DACP1', 'DACP2', 'DACP3', 'DACP4', 'DACP5', 'MECHDA', 'PC', 'MT_FINAL']
             for col in cols_num:
                 if col in df_conif.columns:
-                    if df_conif[col].dtype == object:
-                        df_conif[col] = df_conif[col].str.replace(',', '.', regex=False).astype(float)
+                    if str(df_conif[col].dtype) in ['object', 'string']:
+                        df_conif[col] = df_conif[col].astype(str).str.replace(',', '.', regex=False).astype(float)
                     
             st.markdown("<p style='color: #006633; font-weight: bold; font-size: 1.1rem; margin-bottom: 0px;'>⚙️ FILTROS DE PESQUISA</p>", unsafe_allow_html=True)
             
@@ -3576,7 +3576,7 @@ elif menu_opcao == "🏛️ Conif":
             df_ae.columns = df_ae.columns.str.strip()
 
             if 'MAE' in df_ae.columns:
-                if df_ae['MAE'].dtype == object:
+                if str(df_ae['MAE'].dtype) in ['object', 'string']:
                     df_ae['MAE'] = df_ae['MAE'].astype(str).str.replace(',', '.', regex=False).astype(float)
                 df_ae['MAE'] = df_ae['MAE'].fillna(0)
 
@@ -3964,7 +3964,7 @@ elif menu_opcao == "ℹ️ Informações Adicionais":
             
             # Tratamento da coluna FEC para valor numérico float
             if 'FEC' in df_fec.columns:
-                if df_fec['FEC'].dtype == object:
+                if str(df_fec['FEC'].dtype) in ['object', 'string']:
                     df_fec['FEC_num'] = df_fec['FEC'].astype(str).str.replace('.', '', regex=False).str.replace(',', '.', regex=False).astype(float)
                 else:
                     df_fec['FEC_num'] = df_fec['FEC'].astype(float)
